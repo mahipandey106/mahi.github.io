@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>jQuery Add Class Example</title>
+
+  <style>
+    .highlight {
+      color: rgb(0, 0, 0);
+      background-color: rgb(255, 0, 221);
+      padding: 5px;
+      border-radius: 5px;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <p id="myText">This is a paragraph.</p>
+  <button id="btn">Add Class</button>
+  <script>
+    $(document).ready(function() {
+      $("#btn").click(function() {
+        $("#myText").addClass("highlight");
+      });
+    });
+  </script>
+</body>
+</html>
