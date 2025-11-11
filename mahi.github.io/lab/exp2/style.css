@@ -1,0 +1,18 @@
+.highlight {
+  color: red;
+  font-weight: bold;
+}
+<<<<<<< HEAD
+=======
+#anim-box {
+  background: lightgreen;
+  width: 100px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+}
+.anim-done {
+  background: orange;
+  color: white;
+}
+>>>>>>> 4061eac (normalise line endings)

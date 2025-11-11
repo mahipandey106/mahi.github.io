@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment 2: jQuery CSS and Events</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .highlight {
+            color: white;
+            background-color: blue;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #box {
+            width: 100px;
+            height: 100px;
+            background: coral;
+            margin: 50px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 id="heading">Experiment 2: jQuery CSS and Events</h2>
+
+    <button id="addClassBtn">Add Class to Heading</button>
+    <button id="positionBtn">Get Position of Box</button>
+    <button id="animateBtn">Animate Box</button>
+
+    <div id="box"></div>
+
+    <p id="output"></p>
+
+    <script>
+        $(document).ready(function () {
+
+            // 1️⃣ Add a class to an element
+            $("#addClassBtn").click(function () {
+                $("#heading").addClass("highlight");
+            });
+
+            // 2️⃣ Access the position of an element
+            $("#positionBtn").click(function () {
+                let pos = $("#box").position(); // gets top & left relative to parent
+                $("#output").text("Box Position - Top: " + pos.top + "px, Left: " + pos.left + "px");
+            });
+
+            // 3️⃣ Animate multiple CSS properties
+            $("#animateBtn").click(function () {
+                $("#box").animate({
+                    left: "+=100px",
+                    top: "+=50px",
+                    width: "150px",
+                    height: "150px",
+                    opacity: 0.5
+                }, 1000); // animation duration = 1 second
+            });
+
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AWT Progress</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="s.css">
+</head>
+<body ng-controller="MainCtrl">
+    <h1>AWT Progress</h1>
+
+    <div class="folder" ng-repeat="folder in data.Class">
+        <h2>{{folder.name}}</h2>
+
+        <!-- Subfolders -->
+        <div class="subfolder" ng-repeat="sub in folder.subfolders">
+            <h3>{{sub.name}}</h3>
+            <ul>
+                <li ng-repeat="file in sub.files">
+                    <a ng-href="{{file.path}}">{{file.name}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Direct files -->
+        <ul ng-if="folder.files">
+            <li ng-repeat="file in folder.files">
+                <a ng-href="{{file.path}}">{{file.name}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        angular.module('myApp', [])
+            .controller('MainCtrl', function($scope, $http) {
+                $http.get('data.json')
+                    .then(function(response) {
+                        $scope.data = response.data;
+                    })
+                    .catch(function(error) {
+                        console.error("Error fetching data:", error);
+                    });
+            });
+    </script>
+</body>
+</html>
+

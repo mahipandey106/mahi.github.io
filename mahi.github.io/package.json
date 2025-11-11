@@ -1,0 +1,23 @@
+{
+  "name": "mahi.github.io",
+  "version": "2.0.0",
+  "description": "hello",
+  "main": "jquery-3.7.1.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahipandey106/mahi.github.io.git"
+  },
+  "keywords": [],
+  "author": "mahipandey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mahipandey106/mahi.github.io/issues"
+  },
+  "homepage": "https://github.com/mahipandey106/mahi.github.io#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

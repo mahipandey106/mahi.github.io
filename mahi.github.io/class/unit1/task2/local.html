@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Local jQuery</title>
+
+  <script src="./jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <h1>Testing Local jQuery</h1>
+  <p>Time taken is <span id="time">being estimated</span></p>
+
+  <script>
+    const start = performance.now();
+
+    $(document).ready(function () {
+      // Measure time
+      const end = performance.now();
+      var timeTaken = end - start;
+      console.log("Local jQuery load time: " + timeTaken.toFixed(2) + " ms");
+      $("#time").html(timeTaken.toFixed(2) + " ms");
+    });
+  </script>
+</body>
+</html>

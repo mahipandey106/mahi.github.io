@@ -1,0 +1,147 @@
+{
+  "Class": [
+    {
+      "name": "Angular",
+      "subfolders": [
+        {
+          "name": "angular expression",
+          "files": [
+            { "name": "expressions.html", "path": "class/unit2/angularjs/expressions.html" },
+            { "name": "expression2.html", "path": "class/unit2/angularjs/expression2.html" },
+            { "name": "expression3.html", "path": "class/unit2/angularjs/expression3.html" }
+          ]
+        },
+        {
+          "name": "ng-bind example",
+          "files": [
+            { "name": "binding.html", "path": "class/unit2/angularjs/binding.html" }
+          ]
+        },
+        {
+          "name": "ng-class example",
+          "files": [
+            { "name": "directives.html", "path": "class/unit2/angularjs/directives.html" }
+          ]
+        },
+        {
+          "name": "ng-click example",
+          "files": [
+            { "name": "click.html", "path": "class/unit2/angularjs/click.html" }
+          ]
+        },
+        {
+          "name": "misc examples",
+          "files": [
+            { "name": "exp3.html", "path": "class/unit2/angularjs/exp3.html" },
+            { "name": "index.html", "path": "class/unit2/angularjs/index.html" }
+          ]
+        },
+        {
+          "name": "angular library",
+          "files": [
+            { "name": "angular.min.js", "path": "class/unit2/angular.min.js" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Jquery",
+      "subfolders": [
+        {
+          "name": "Task 1",
+          "files": [
+            { "name": "index.html", "path": "class/unit1/task1/index.html" }
+          ]
+        },
+        {
+          "name": "Task 2",
+          "files": [
+            { "name": "local.html", "path": "class/unit1/task2/local.html" },
+            { "name": "remote.html", "path": "class/unit1/task2/remote.html" }
+          ]
+        },
+        {
+          "name": "Jquery APP",
+          "files": [
+            { "name": "index.html", "path": "class/unit1/first_jQuery_App/index.html" },
+            { "name": "script.js", "path": "class/unit1/first_jQuery_App/script.js" },
+            { "name": "style.css", "path": "class/unit1/first_jQuery_App/style.css" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nodejs",
+      "files": [
+        { "name": "server.js", "path": "nodeJs/server.js" },
+        { "name": "app.js", "path": "nodeJs/app.js" },
+        { "name": "variable.js", "path": "nodeJs/variable.js" },
+        { "name": "README.md", "path": "nodeJs/Node.js.Ink" }
+      ]
+    }
+  ],
+  "Lab Experiments": [
+    {
+      "name": "Experiment 1",
+      "files": [
+        { "name": "alltasks.html", "path": "lab/exp1/alltasks.html" }
+      ]
+    },
+    {
+      "name": "Experiment 2",
+      "files": [
+        { "name": "abc.html", "path": "lab/exp2/abc.html" },
+        { "name": "alltasks.html", "path": "lab/exp2/alltasks.html" },
+        { "name": "exp2.js", "path": "lab/exp2/exp2.js" },
+        { "name": "index.html", "path": "lab/exp2/index.html" },
+        { "name": "style.css", "path": "lab/exp2/style.css" }
+      ]
+    },
+    {
+      "name": "Experiment 3",
+      "files": [
+        { "name": "app.js", "path": "lab/exp3/app.js" },
+        { "name": "index.html", "path": "lab/exp3/index.html" },
+        { "name": "style.css", "path": "lab/exp3/style.css" }
+      ]
+    },
+    {
+      "name": "Experiment 4",
+      "files": [
+        { "name": "index.html", "path": "lab/exp4/index.html" },
+        { "name": "style.css", "path": "lab/exp4/style.css" }
+      ]
+    },
+    {
+      "name": "Experiment 5",
+      "files": [
+        { "name": "index.html", "path": "lab/exp5/index.html" },
+        { "name": "nodetest.js", "path": "lab/exp5/nodetest.js" },
+        { "name": "package.json", "path": "lab/exp5/package.json" }
+
+      ]
+    },
+    {
+      "name": "Experiment 6 (Node Modules)",
+      "files": [
+        { "name": "server.js", "path": "lab/exp6/server.js" },
+        { "name": "package.json", "path": "lab/exp6/package.json" },
+        { "name": "package-lock.json", "path": "lab/exp6/package-lock.json" },
+        { "name": "package2.json", "path": "lab/exp6/package2.json" },
+        { "name": "README.md", "path": "lab/exp6/README.md" }
+
+      ]
+    },
+    {
+      "name": "Experiment 7",
+      "files": [
+        { "name": "node_modules", "path": "lab/exp7/source/node_modules" },
+        { "name": "cookie-example.js", "path":"lab/exp7/source/cookie-example.js"},
+        { "name": "session-example.js", "path":"lab/exp7/source/session-example.js"},
+        { "name": "package.json", "path":"lab/exp7/source/package.json"},
+        { "name": "package-lock.json", "path":"lab/exp7/source/package-lock.json"},
+        { "name": "session-cookie-demo", "path": "lab/exp7/source/" }
+      ]
+    }
+  ]
+}

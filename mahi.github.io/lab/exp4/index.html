@@ -1,0 +1,130 @@
+<!doctype html>
+<html ng-app="formApp">
+<head>
+  <meta charset="utf-8">
+  <title>Experiment 4 - Angular Forms and Events</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    form { max-width: 400px; margin-bottom: 30px; }
+    input, button { display: block; margin: 10px 0; padding: 8px; width: 100%; }
+    .error { color: red; font-size: 13px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #eee; }
+    button { cursor: pointer; }
+  </style>
+</head>
+<body ng-controller="MainController as ctrl">
+
+  <h1>Experiment 4 - Angular Forms and Events</h1>
+
+  <!-- 1. User Registration Form with Validation -->
+  <section>
+    <h2>1. User Registration Form</h2>
+    <form name="regForm" ng-submit="ctrl.registerUser()" novalidate>
+      
+      <label>Name:</label>
+      <input type="text" name="name" ng-model="ctrl.user.name" required>
+      <span class="error" ng-show="regForm.name.$touched && regForm.name.$invalid">Name is required.</span>
+
+      <label>Email:</label>
+      <input type="email" name="email" ng-model="ctrl.user.email" required>
+      <span class="error" ng-show="regForm.email.$touched && regForm.email.$invalid">Valid email is required.</span>
+
+      <label>Password:</label>
+      <input type="password" name="password" ng-model="ctrl.user.password" ng-minlength="6" required>
+      <span class="error" ng-show="regForm.password.$touched && regForm.password.$invalid">
+        Password must be at least 6 characters.
+      </span>
+
+      <button type="submit" ng-disabled="regForm.$invalid">Register</button>
+    </form>
+
+    <p><strong>Registered User:</strong> {{ctrl.registeredUser | json}}</p>
+  </section>
+
+  <hr>
+
+  <!-- 2. Bill Payment Record (CRUD) -->
+  <section>
+    <h2>2. Bill Payment Record (CRUD in-memory)</h2>
+    <form ng-submit="ctrl.addBill()">
+      <label>Bill Name:</label>
+      <input type="text" ng-model="ctrl.newBill.name" placeholder="e.g. Electricity Bill" required>
+
+      <label>Amount:</label>
+      <input type="number" ng-model="ctrl.newBill.amount" placeholder="e.g. 1200" required>
+
+      <button type="submit">Add Bill</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Bill Name</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="bill in ctrl.bills track by $index">
+          <td>{{$index + 1}}</td>
+          <td>
+            <span ng-hide="bill.editing">{{bill.name}}</span>
+            <input ng-show="bill.editing" type="text" ng-model="bill.name">
+          </td>
+          <td>
+            <span ng-hide="bill.editing">{{bill.amount}}</span>
+            <input ng-show="bill.editing" type="number" ng-model="bill.amount">
+          </td>
+          <td>
+            <button ng-click="ctrl.editBill(bill)" ng-hide="bill.editing">Edit</button>
+            <button ng-click="ctrl.saveBill(bill)" ng-show="bill.editing">Save</button>
+            <button ng-click="ctrl.deleteBill($index)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- AngularJS Controller -->
+  <script>
+    angular.module("formApp", [])
+      .controller("MainController", function() {
+        var self = this;
+
+        // User Registration
+        self.user = {};
+        self.registeredUser = null;
+
+        self.registerUser = function() {
+          self.registeredUser = angular.copy(self.user);
+          self.user = {}; // reset form
+        };
+
+        // Bill Payment CRUD
+        self.bills = [];
+        self.newBill = {};
+
+        self.addBill = function() {
+          self.bills.push(angular.copy(self.newBill));
+          self.newBill = {}; // reset form
+        };
+
+        self.editBill = function(bill) {
+          bill.editing = true;
+        };
+
+        self.saveBill = function(bill) {
+          bill.editing = false;
+        };
+
+        self.deleteBill = function(index) {
+          self.bills.splice(index, 1);
+        };
+      });
+  </script>
+</body>
+</html>
