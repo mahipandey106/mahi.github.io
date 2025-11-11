@@ -1,0 +1,17 @@
+{
+  "name": "unit4",
+  "version": "1.0.0",
+  "description": "sessionAndCookies",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node app.js"
+  },
+  "keywords": [],
+  "author": "mahi",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "mahi.github.io"
+  }
+}
