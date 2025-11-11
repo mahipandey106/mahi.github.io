@@ -78,6 +78,12 @@
         { "name": "variable.js", "path": "nodeJs/variable.js" },
         { "name": "README.md", "path": "nodeJs/Node.js.Ink" }
       ]
+    },
+    {
+      "name": "Todo App",
+      "files": [
+        { "name": "mytodoapp.html", "path": "class/todo_app/mytodoapp.html" }   
+      ]
     }
   ],
   "Lab Experiments": [
@@ -118,7 +124,6 @@
         { "name": "index.html", "path": "lab/exp5/index.html" },
         { "name": "nodetest.js", "path": "lab/exp5/nodetest.js" },
         { "name": "package.json", "path": "lab/exp5/package.json" }
-
       ]
     },
     {
@@ -129,17 +134,16 @@
         { "name": "package-lock.json", "path": "lab/exp6/package-lock.json" },
         { "name": "package2.json", "path": "lab/exp6/package2.json" },
         { "name": "README.md", "path": "lab/exp6/README.md" }
-
       ]
     },
     {
       "name": "Experiment 7",
       "files": [
         { "name": "node_modules", "path": "lab/exp7/source/node_modules" },
-        { "name": "cookie-example.js", "path":"lab/exp7/source/cookie-example.js"},
-        { "name": "session-example.js", "path":"lab/exp7/source/session-example.js"},
-        { "name": "package.json", "path":"lab/exp7/source/package.json"},
-        { "name": "package-lock.json", "path":"lab/exp7/source/package-lock.json"},
+        { "name": "cookie-example.js", "path": "lab/exp7/source/cookie-example.js" },
+        { "name": "session-example.js", "path": "lab/exp7/source/session-example.js" },
+        { "name": "package.json", "path": "lab/exp7/source/package.json" },
+        { "name": "package-lock.json", "path": "lab/exp7/source/package-lock.json" },
         { "name": "session-cookie-demo", "path": "lab/exp7/source/" }
       ]
     }
