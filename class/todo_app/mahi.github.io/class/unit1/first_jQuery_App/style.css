@@ -1,0 +1,22 @@
+:root{--bg:#f5f7fb;--card:#fff;--accent:#5b7cff;--muted:#6b7280}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;margin:0;background:var(--bg);color:#111}
+.wrap{max-width:720px;margin:40px auto;padding:24px}
+.card{background:var(--card);border-radius:12px;box-shadow:0 6px 18px rgba(16,24,40,0.06);padding:18px}
+h1{font-size:20px;margin:0 0 12px}
+.new-task{display:flex;gap:8px}
+.new-task input[type=text]{flex:1;padding:10px 12px;border:1px solid #e6e9ef;border-radius:8px;font-size:14px}
+.new-task button{background:var(--accent);color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+.controls{display:flex;justify-content:space-between;align-items:center;margin-top:14px;gap:12px}
+.filters{display:flex;gap:8px}
+.filters button{background:transparent;border:1px solid transparent;padding:6px 10px;border-radius:8px;cursor:pointer}
+.filters button.active{border-color:#e6e9ef;background:#f3f6ff}
+ul.tasks{list-style:none;padding:0;margin:16px 0 8px}
+ul.tasks li{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;border:1px solid #f0f2f6;margin-bottom:8px}
+ul.tasks li.completed{opacity:0.6;text-decoration:line-through;background:#fbfbfe}
+.task-text{flex:1}
+.task-actions{display:flex;gap:6px}
+.task-actions button{border:none;padding:8px;border-radius:8px;cursor:pointer;background:#f3f4f6}
+.meta{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;margin-top:8px}
+.count{font-weight:600}
+@media (max-width:520px){.wrap{padding:12px;margin:18px}.card{padding:12px}.new-task input{font-size:13px}}

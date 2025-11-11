@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWT Progress</title>
+    <!-- Load AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Load Tailwind CSS for modern aesthetics -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for dark theme and typography */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+        }
+        .folder-title {
+            border-bottom: 2px solid #333;
+        }
+        .subfolder-name {
+            color: #7D7DFF; /* Light purple for subfolder names */
+        }
+    </style>
+</head>
+<body ng-app="myApp" ng-controller="MainCtrl" class="p-4 md:p-8 text-gray-100">
+
+    <h1 class="text-3xl font-extrabold mb-8 text-center text-teal-400">AWT PROGRESS</h1>
+
+    <div class="max-w-4xl mx-auto space-y-8">
+        
+        <!-- ============================================== -->
+        <!-- 1. Rendering the Class section (Angular, Jquery, Nodejs) -->
+        <!-- ============================================== -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-xl">
+            <h2 class="text-2xl font-semibold mb-4 text-yellow-400 folder-title pb-2">Class</h2>
+            
+            <!-- Loop through top-level Class folders (Angular, Jquery, Nodejs) -->
+            <div ng-repeat="folder in data.Class" class="mb-6 border-l-4 border-gray-600 pl-4">
+                
+                <h3 class="text-xl font-bold mb-3 mt-2 text-blue-400">{{folder.name}}</h3>
+
+                <!-- Sub-Loop for Angular/Jquery (folders with 'subfolders') -->
+                <div class="pl-4 space-y-2" ng-if="folder.subfolders">
+                    <div ng-repeat="sub in folder.subfolders">
+                        <p class="text-lg font-medium subfolder-name">{{sub.name}}</p>
+                        <ul class="list-disc list-inside ml-4 text-gray-300">
+                            <li ng-repeat="file in sub.files" class="py-0.5">
+                                <a ng-href="{{file.path}}" class="text-green-400 hover:text-green-300 transition duration-150">{{file.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Direct files for Nodejs (folders with 'files') -->
+                <ul ng-if="folder.files" class="list-disc list-inside ml-4 text-gray-300">
+                    <li ng-repeat="file in folder.files" class="py-0.5">
+                        <a ng-href="{{file.path}}" class="text-green-400 hover:text-green-300 transition duration-150">{{file.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- ============================================== -->
+        <!-- 2. Rendering the Lab Experiments section -->
+        <!-- ============================================== -->
+        <div class="bg-gray-800 p-6 rounded-lg shadow-xl">
+            <h2 class="text-2xl font-semibold mb-4 text-yellow-400 folder-title pb-2">Lab Experiments</h2>
+            
+            <!-- Loop through Lab Experiments -->
+            <div ng-repeat="exp in data['Lab Experiments']" class="mb-4 border-l-4 border-gray-600 pl-4">
+                
+                <h3 class="text-xl font-bold mb-3 mt-2 text-blue-400">{{exp.name}}</h3>
+                
+                <ul class="list-disc list-inside ml-4 text-gray-300">
+                    <li ng-repeat="file in exp.files" class="py-0.5">
+                        <a ng-href="{{file.path}}" class="text-green-400 hover:text-green-300 transition duration-150">{{file.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Use a global variable to store data fetched synchronously before AngularJS loads.
+        let fileData = {};
+
+        // Fetch data synchronously using XMLHttpRequest to avoid sandboxing/async errors
+        // often encountered when fetching local files.
+        try {
+            const xhr = new XMLHttpRequest();
+            // false makes the request synchronous
+            xhr.open('GET', 'data.json', false); 
+            xhr.send(null);
+
+            if (xhr.status === 200) {
+                fileData = JSON.parse(xhr.responseText);
+                console.log("Data loaded successfully (Synchronous):", fileData);
+            } else {
+                console.error("Failed to load data.json. HTTP Status:", xhr.status);
+            }
+        } catch (e) {
+            console.error("Error fetching data synchronously:", e);
+        }
+
+        // Angular App Initialization
+        angular.module('myApp', [])
+            .controller('MainCtrl', function($scope) {
+                // Assign the pre-fetched data to the scope
+                $scope.data = fileData;
+            });
+    </script>
+</body>
+</html>

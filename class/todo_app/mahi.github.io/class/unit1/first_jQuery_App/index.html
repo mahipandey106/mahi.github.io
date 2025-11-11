@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>jQuery To-Do App</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>jQuery To-Do App</h1>
+      <div class="new-task">
+        <input id="newTask" type="text" placeholder="Add a new task and press Enter or click Add" maxlength="200" />
+        <button id="addBtn">Add</button>
+      </div>
+      <div class="controls">
+        <div class="filters">
+          <button data-filter="all" class="active">All</button>
+          <button data-filter="active">Active</button>
+          <button data-filter="completed">Completed</button>
+        </div>
+        <div><button id="clearCompleted">Clear Completed</button></div>
+      </div>
+      <ul class="tasks" id="taskList"></ul>
+      <div class="meta">
+        <div><span class="count" id="remainingCount">0</span> items left</div>
+        <div>Double-click a task to edit • Press Esc to cancel</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

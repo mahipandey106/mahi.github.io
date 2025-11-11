@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Remote jQuery</title>
+
+  <!-- Use jQuery from CDN instead of local -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+
+  <h1>Testing Remote jQuery</h1>
+  <p>Time taken is <span id="time">being estimated</span></p>
+
+  <script>
+    const start = performance.now();
+
+    $(document).ready(function () {
+      // Measure time
+      const end = performance.now();
+      var timeTaken = end - start;
+      console.log("Remote jQuery load time: " + timeTaken.toFixed(2) + " ms");
+      $("#time").html(timeTaken.toFixed(2) + " ms");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do App using jQuery (with Update)</title>
+
+  <!-- jQuery CDN -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .todo-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 340px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    input[type="text"] {
+      width: 68%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+    }
+
+    button {
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    #addBtn {
+      background-color: #2563eb;
+    }
+    #addBtn:hover {
+      background-color: #1e40af;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    li {
+      background: #f1f5f9;
+      padding: 10px;
+      margin-bottom: 8px;
+      border-radius: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li.completed {
+      text-decoration: line-through;
+      color: gray;
+      background: #e5e7eb;
+    }
+
+    .btns {
+      display: flex;
+      gap: 5px;
+    }
+
+    .delete, .edit, .save {
+      padding: 5px 8px;
+      border-radius: 4px;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .delete { background: red; }
+    .delete:hover { background: darkred; }
+    .edit { background: orange; }
+    .edit:hover { background: darkorange; }
+    .save { background: green; }
+    .save:hover { background: darkgreen; }
+
+    input.edit-input {
+      width: 65%;
+      padding: 5px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="todo-container">
+    <h2>📝 My To-Do List</h2>
+    <input type="text" id="taskInput" placeholder="Enter a task...">
+    <button id="addBtn">Add</button>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    $(document).ready(function(){
+
+      // 1️⃣ ADD TASK
+      $('#addBtn').click(function(){
+        let taskText = $('#taskInput').val().trim();
+
+        if(taskText !== "") {
+          $('#taskList').append(`
+            <li>
+              <span class="task-text">${taskText}</span>
+              <div class="btns">
+                <button class="edit">✏️</button>
+                <button class="delete">❌</button>
+              </div>
+            </li>
+          `);
+          $('#taskInput').val('');
+        } else {
+          alert("Please enter a task!");
+        }
+      });
+
+      // 2️⃣ MARK AS COMPLETED (toggle)
+      $(document).on('click', '.task-text', function(){
+        $(this).toggleClass('completed');
+      });
+
+      // 3️⃣ DELETE TASK
+      $(document).on('click', '.delete', function(event){
+        event.stopPropagation();
+        $(this).closest('li').fadeOut(300, function(){
+          $(this).remove();
+        });
+      });
+
+      // 4️⃣ EDIT TASK
+      $(document).on('click', '.edit', function(event){
+        event.stopPropagation();
+
+        let listItem = $(this).closest('li');
+        let textSpan = listItem.find('.task-text');
+        let oldText = textSpan.text();
+
+        // Replace text with input box
+        textSpan.replaceWith(`<input type="text" class="edit-input" value="${oldText}">`);
+
+        // Change Edit → Save
+        $(this).text('💾').removeClass('edit').addClass('save');
+      });
+
+      // 5️⃣ SAVE UPDATED TASK
+      $(document).on('click', '.save', function(event){
+        event.stopPropagation();
+
+        let listItem = $(this).closest('li');
+        let inputBox = listItem.find('.edit-input');
+        let newText = inputBox.val().trim();
+
+        if(newText !== "") {
+          inputBox.replaceWith(`<span class="task-text">${newText}</span>`);
+          $(this).text('✏️').removeClass('save').addClass('edit');
+        } else {
+          alert("Task cannot be empty!");
+        }
+      });
+
+      // BONUS: Add task with Enter key
+      $('#taskInput').keypress(function(e){
+        if(e.which === 13){
+          $('#addBtn').click();
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Experiment 1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            height: 2000px;
+            font-family: Arial, sans-serif;
+        }
+        #scrollTopImg {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            cursor: pointer;
+        }
+        #scrollBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #section2 {
+            margin-top: 800px;
+            padding: 50px;
+            background: lightcoral;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Experiment 1: Disable Right Click & Scroll</h2>
+
+    <button id="scrollBtn">Go to Section 2</button>
+
+    <div id="section2">
+        <h2>This is Section 2</h2>
+    </div>
+
+    <!-- Image to scroll to top -->
+    <img id="scrollTopImg" src="https://cdn-icons-png.flaticon.com/512/892/892692.png" alt="Scroll to Top">
+
+    <script>
+        $(document).ready(function () {
+            // ✅ Disable right click
+            $(document).on("contextmenu", function () {
+                alert("Right click is disabled!");
+                return false;
+            });
+
+            // ✅ Scroll to Top when clicking image
+            $("#scrollTopImg").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 500);
+            });
+
+            // ✅ Scroll to Section 2 on button click
+            $("#scrollBtn").click(function () {
+                $("html, body").animate({ scrollTop: $("#section2").offset().top }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
