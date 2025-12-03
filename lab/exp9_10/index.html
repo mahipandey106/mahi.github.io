@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Experiment 9 & 10 Combined D3</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Styles for Bar Chart (Part 1 & 4) */
+        .bar {
+            fill: steelblue;
+            transition: fill 0.2s ease;
+        }
+        .bar:hover {
+            fill: orange;
+        }
+        .axis path, .axis line {
+            fill: none;
+            stroke: #333;
+            shape-rendering: crispEdges;
+        }
+
+        /* Styles for Interactive Shapes (Part 2) */
+        .interactive-shape {
+            stroke: black;
+            stroke-width: 2px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>D3.js Data Visualization Combined Experiment</h1>
+
+    <p id="target-paragraph">This paragraph will be updated and styled by D3.js (Part 3).</p>
+    <hr>
+
+    <h2>📊 Bar Chart from CSV Data (Part 1 & 4)</h2>
+    <svg id="bar-chart-container"></svg>
+    <hr>
+
+    <h2>🕹️ Interactive SVG Controls (Part 2)</h2>
+    <svg id="interactive-shapes-container" width="400" height="200" style="border: 1px solid #ccc;"></svg>
+
+    <script src="app.js"></script>
+</body>
+</html>

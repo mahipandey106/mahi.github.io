@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Center Inventory</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for better visual on table container */
+        .scroll-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans p-4 sm:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-8 bg-blue-600 text-white p-6 rounded-xl shadow-lg">
+            <h1 class="text-4xl font-extrabold">🛍️ Inventory Manager</h1>
+            <p class="text-blue-200 mt-2">Full-Stack Application (Frontend & Express/MongoDB)</p>
+        </header>
+
+        <!-- Notification Area -->
+        <div id="message-box" class="fixed top-4 right-4 bg-green-500 text-white p-3 rounded-lg shadow-xl hidden transition-opacity duration-300"></div>
+
+        <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            
+            <!-- Left Column: Add/Update Form -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg h-fit">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Add New Item</h2>
+                <form id="add-item-form" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Item Name</label>
+                        <input type="text" id="name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label for="price" class="block text-sm font-medium text-gray-700">Price (USD)</label>
+                        <input type="number" id="price" required step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label for="stock" class="block text-sm font-medium text-gray-700">Initial Stock</label>
+                        <input type="number" id="stock" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <button type="submit" class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-md transition duration-150">
+                        Add Item
+                    </button>
+                </form>
+
+                <h2 class="text-2xl font-semibold mt-8 mb-4 text-gray-800 border-b pb-2">Simulate Sale/Restock</h2>
+                <form id="sale-form" class="space-y-4">
+                    <div>
+                        <label for="sale-item-id" class="block text-sm font-medium text-gray-700">Item ID to Modify</label>
+                        <input type="text" id="sale-item-id" required placeholder="Enter Item ID" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                    <div>
+                        <label for="stock-change" class="block text-sm font-medium text-gray-700">Quantity Change (+Restock, -Sale)</label>
+                        <input type="number" id="stock-change" required placeholder="-5 for Sale, +10 for Restock" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border">
+                    </div>
+                     <button type="submit" class="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md transition duration-150">
+                        Process Transaction
+                    </button>
+                </form>
+
+            </div>
+
+            <!-- Right Column: Stock Report Table -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-4 text-gray-800 border-b pb-2">Current Stock Report</h2>
+                
+                <div id="loading" class="text-center py-10 text-gray-500">Loading inventory...</div>
+
+                <div class="overflow-x-auto scroll-container">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="inventory-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Inventory rows will be inserted here by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // --- Configuration ---
+        const API_BASE_URL = 'http://localhost:3000/api/items';
+        const inventoryTableBody = document.getElementById('inventory-table-body');
+        const loadingIndicator = document.getElementById('loading');
+        const messageBox = document.getElementById('message-box');
+
+        // --- Utility Functions ---
+
+        function showMessage(msg, type = 'success') {
+            messageBox.textContent = msg;
+            messageBox.className = `fixed top-4 right-4 p-3 rounded-lg shadow-xl transition-opacity duration-300 ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white`;
+            messageBox.classList.remove('hidden');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 3000);
+        }
+
+        async function fetchData(url, method = 'GET', data = null) {
+            const options = {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+            };
+            if (data) {
+                options.body = JSON.stringify(data);
+            }
+            
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.message || 'API request failed.');
+                }
+                return result;
+            } catch (error) {
+                showMessage(`Error: ${error.message}`, 'error');
+                console.error('Fetch Error:', error);
+                return null;
+            }
+        }
+
+        // --- Core Functions (Task Implementations) ---
+
+        // Task: Stock Report (READ)
+        async function fetchInventory() {
+            loadingIndicator.classList.remove('hidden');
+            const items = await fetchData(API_BASE_URL);
+            loadingIndicator.classList.add('hidden');
+            
+            if (items) {
+                renderInventory(items);
+            } else {
+                 inventoryTableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">Could not load inventory. Is the server running?</td></tr>';
+            }
+        }
+
+        function renderInventory(items) {
+            inventoryTableBody.innerHTML = ''; // Clear existing rows
+
+            if (items.length === 0) {
+                inventoryTableBody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-500">No items in stock. Add one above!</td></tr>';
+                return;
+            }
+
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-gray-100 transition duration-100';
+                
+                row.innerHTML = `
+                    <td class="px-3 py-3 whitespace-nowrap text-sm font-medium text-gray-900">${item.name}</td>
+                    <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-500">$${item.price.toFixed(2)}</td>
+                    <td class="px-3 py-3 whitespace-nowrap text-sm font-bold ${item.stock < 10 ? 'text-red-500' : 'text-green-600'}">${item.stock}</td>
+                    <td class="px-3 py-3 whitespace-nowrap text-xs text-gray-400">${item._id}</td>
+                    <td class="px-3 py-3 whitespace-nowrap text-sm font-medium">
+                        <button onclick="deleteItem('${item._id}')" class="text-red-600 hover:text-red-900 text-xs font-semibold">
+                            Delete
+                        </button>
+                    </td>
+                `;
+                inventoryTableBody.appendChild(row);
+            });
+        }
+        
+        // Task: Add an item (CREATE)
+        document.getElementById('add-item-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const newItem = {
+                name: form.name.value,
+                price: parseFloat(form.price.value),
+                stock: parseInt(form.stock.value, 10),
+                category: "General" 
+            };
+            
+            const result = await fetchData(API_BASE_URL, 'POST', newItem);
+            if (result) {
+                showMessage(result.message);
+                form.reset();
+                fetchInventory();
+            }
+        });
+
+        // Task: Delete an item (DELETE)
+        async function deleteItem(id) {
+            if (!confirm(`Are you sure you want to delete item ID ${id}?`)) return;
+
+            const url = `${API_BASE_URL}/${id}`;
+            const result = await fetchData(url, 'DELETE');
+            if (result) {
+                showMessage(result.message, 'success');
+                fetchInventory();
+            }
+        }
+
+        // Task: Update an item detail / Simulate Sale (UPDATE)
+        document.getElementById('sale-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.target;
+            const itemId = form['sale-item-id'].value;
+            const stockChange = form['stock-change'].value;
+            
+            if (!itemId) {
+                showMessage("Please enter an Item ID.", 'error');
+                return;
+            }
+
+            const url = `${API_BASE_URL}/${itemId}`;
+            const updatePayload = { stockChange: stockChange };
+            
+            const result = await fetchData(url, 'PUT', updatePayload);
+            if (result) {
+                showMessage(result.message);
+                form.reset();
+                fetchInventory();
+            }
+        });
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', fetchInventory);
+    </script>
+</body>
+</html>
