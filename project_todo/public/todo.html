@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Todo</title>
+  <title>Register</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 
-<h2>Your Todos</h2>
+<h2>Register</h2>
 
-<input id="todoInput" placeholder="new task">
-<button id="addBtn">Add</button>
+<input id="regUser" placeholder="username">
+<input id="regPass" type="password" placeholder="password">
+<button id="registerBtn">Register</button>
 
-<ul id="todoList"></ul>
+<div id="regMsg"></div>
+
+<p style="margin-top: 15px;">
+    Already have an account?
+    <a href="index.html">Login here</a>
+</p>
 
 <script src="script.js"></script>
 </body>

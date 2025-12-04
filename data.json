@@ -82,7 +82,7 @@
     {
       "name": "Todo App",
       "files": [
-        { "name": "mytodoapp.html", "path": "class/todo_app/mytodoapp.html" }   
+        { "name": "mytodoapp.html", "path": "class/todo_app/mytodoapp.html" }
       ]
     }
   ],
@@ -145,6 +145,20 @@
         { "name": "package.json", "path": "lab/exp7/source/package.json" },
         { "name": "package-lock.json", "path": "lab/exp7/source/package-lock.json" },
         { "name": "session-cookie-demo", "path": "lab/exp7/source/" }
+      ]
+    },
+    {
+      "name": "Experiment 8",
+      "files": [
+        { "name": "index.html", "path": "lab/exp8/index.html" }
+      ]
+    },
+    {
+      "name": "Experiment 9_10",
+      "files": [
+        { "name": "index.html", "path": "lab/exp9_10/index.html" },
+        { "name": "app.js", "path": "lab/exp9_10/app.js" },
+        { "name": "data.csv", "path": "lab/exp9_10/data.csv" }
       ]
     }
   ]

@@ -19,7 +19,9 @@
   "homepage": "https://github.com/mahipandey106/mahi.github.io#readme",
   "dependencies": {
     "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
-    "express-session": "^1.18.2"
+    "express-session": "^1.18.2",
+    "mongodb": "^7.0.0"
   }
 }
